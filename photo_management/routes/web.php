@@ -56,6 +56,13 @@ Route::get('/Dailoged', function () {
 Route::get('/delete', function () {
     return view('welcome');
 });
+Route::get('/formed', function () {
+    return view('welcome');
+});
+
+Route::get('/login2', function () {
+    return view('welcome');
+});
 
 
 //Route::get('/photos/{filename}', [PhotoController::class, 'getfilesfromcshow'])->where('filename', '.*');
