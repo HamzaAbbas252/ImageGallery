@@ -6,52 +6,44 @@ import Action_Table  from "../component/ActionTable.vue"
 import sidebar from "../component/sidebar.vue"
 import oldbar from "../component/oldbar.vue"
 import Main from "../screens/Main.vue"
-import NewLoginFrom from "../screens/NewLoginForm.vue"
 import Dailoged from "../component/DailogImage.vue"
 import Deletion_table from "../component/DeleteAction.vue"
-
 const routes = [
     {
         name:"Login",
         path: '/',
-        component : LoginForm
+        component : LoginForm,
+        meta: {guest: true},
     },
     {
         name:"Deletion_table",
         path: '/delete',
-        component : Deletion_table
-    },
-    {
-        name:"NewLoginForm",
-        path: '/NewLoginForm',
-        component : NewLoginFrom
-    },    
-    {
-        name:"oldbar",
-        path: '/oldbar',
-        component : oldbar
+        component : Deletion_table,
+        meta: {requiresAuth: true}
     },
     {
         name:"Table",
         path: '/Table',
-        component : Table
+        component : Table,
+        meta: {requiresAuth: true}
     },
     {
         name:"sidebar",
         path: '/sidebar',
-        component : sidebar
+        component : sidebar,
+        meta: {requiresAuth: true}
     },
     {
         name:"Dailoged",
         path: '/Dailoged',
-        component : Dailoged
+        component : Dailoged,
+        meta: {requiresAuth: true}
     },
-
-
     {
         name:"Main",
         path: '/Main',
         component : Main,
+        meta: { requiresAuth: true },
         children:[
             {
                 name: 'Table',
@@ -65,17 +57,48 @@ const routes = [
                 component : Action_Table
 
             },
-        ]
+        ],
         }
 
+
 ]
-
-
 
 const router = createRouter({
     history : createWebHistory(),
     routes,
 })
 console.log(router)
+
+function loggedIn(){
+    return localStorage.getItem('token')
+    //return null
+}
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!loggedIn()) {
+            next({
+            path: '/',
+            query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else if(to.matched.some(record => !record.meta.requiresAuth)) {
+        if (loggedIn()) {
+            next({
+            path: '/Main',
+            query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else {
+        next() // make sure to always call next()!
+    }
+})
+
 
 export default router;
