@@ -21,13 +21,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    //All secure URL's
+    });
 
-Route::post("/viewphoto"  ,[GalleryController::class,"get_single_data"]);
-Route::get("Gallery"  ,[GalleryController::class,"get_all_data"]);
-Route::get("/Repeated"  ,[GalleryController::class,"get_Repeated_data"]);
-Route::post("/AllRepeatedData"  ,[GalleryController::class,"get_all_repeated_data"]);
-Route::post("/DeleteRepeatedData"  ,[GalleryController::class,"delete_repeated_data"]);
-Route::post("LoginUser"  ,[UserController::class,"handle_user_logins"]);
-Route::post("AuthUser"  ,[UserController::class,"Login" ]);
+    Route::post("/viewphoto"  ,[GalleryController::class,"get_single_data"]);
+    Route::get("/Gallery"  ,[GalleryController::class,"get_all_data"]);
+    Route::get("/Repeated"  ,[GalleryController::class,"get_Repeated_data"]);
+    Route::post("/AllRepeatedData"  ,[GalleryController::class,"get_all_repeated_data"]);
+    Route::post("/DeleteRepeatedData"  ,[GalleryController::class,"delete_repeated_data"]);
+    Route::post("/LoginUser"  ,[UserController::class,"handle_user_logins"]);
+
+
+
+Route::post("/RegisterUser"  ,[AuthController::class,"register" ]);
+Route::post("/AuthUser"  ,[AuthController::class,"login" ]);
+Route::post("/logouts"  ,[AuthController::class,"logout" ])->middleware('auth:sanctum');
 
 
