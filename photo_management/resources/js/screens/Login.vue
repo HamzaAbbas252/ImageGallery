@@ -2,18 +2,18 @@
 
 <v-layout class="d-flex justify-center pa-16 backgroundlogin">
 <v-card class="d-flex justify-center" style="background-color: rgb(0, 0, 0);">
-    <v-row 
+    <v-row
         align="center"
         no-gutters
         class="d-flex h-auto w-auto"
       >
       <v-col class="d-flex justify-center " md="6" style="background-color: aquamarine;" >
-    
-    <v-sheet style="background-color: black;" > 
+
+    <v-sheet style="background-color: black;" >
         <v-img
         class="rounded-lg"
         :width="450"
-        :height="500"
+        :height="650"
 
 
        cover
@@ -22,18 +22,18 @@
           </v-sheet>
 
       </v-col>
-      
-   
-   
-   
-   
-      <v-col v-col class="d-flex" md="6">
+
+
+
+
+
+      <v-col md="6">
         <v-sheet>
         <LoginPanel/>
-      </v-sheet>  
+      </v-sheet>
       </v-col>
 
- 
+
       </v-row>
 </v-card>
 
@@ -48,7 +48,7 @@ export default{
 
     },
     methods:{
-      
+
     }
 }
 
