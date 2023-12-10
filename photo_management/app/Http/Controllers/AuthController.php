@@ -2,35 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
-    //
+    public function register(Request $request){
+        $request->validate([
+            'name'                  => ['required'],
+            'email'                 => ['required', 'email', 'unique:users'],
+            'password'              => ['required', 'min:6', 'confirmed'],
+            'password_confirmation' => ['required'],
+        ]);
 
-    public function Show()
-    {
-        return View('Welcome');
+        User::create([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password),
+        ]);
+
+        return response()->json(['msg' => 'Registered Successfully']);
     }
 
-    public function Login()
+    public function login(Request $request)
     {
-        validator(\request()->all(), [
-            'email'=> ['required','email'],
-            'password'=> ['required']
+        $request->validate(
+            [
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
 
-        ])->validate();
+         $user = User::where('email', $request->email)->first();
 
-            if(Auth()->attempt(request()->only(['email','password'])))
-            {
-                return redirect()->action('/sidenbar');
-            }
-            else
-            {
-                return redirect()->back()->withErrors($validator)->withInput(['email'=>'invalid Credential']);
-            }
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
 
-
+         return $user->createToken($request->device_name)->plainTextToken;
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['msg' => 'Logout Successfull']);
+
+    }
 }
