@@ -4,7 +4,7 @@
 			<div class="menu" style="background-color: rgb(25, 0, 255);">
 			<router-link to="/Main" class="button">
 				<div class="logo" style="padding-top: 25px;">
-			<img src="../../Images/gallery.jpg" alt="Gallery LOGO" /> 
+			<img src="../../Images/gallery.jpg" alt="Gallery LOGO" />
 				</div>
 				<span class="text font-weight-black" style="padding: 5px;"> GALLERY APP</span>
 			</router-link>
@@ -16,7 +16,7 @@
             subtitle="hamza@gmail.com"
           ></v-list-item>
 
-	
+
 
 		</div>
 
@@ -47,30 +47,59 @@
 				<span class="material-icons">delete</span>
 				<span class="text">Delete Duplicates</span>
 			</router-link>
-			
+
 
 		</div>
 
 		<div class="flex"></div>
-		
+
 		<div class="menu">
-			<router-link to="/" class="button">
+			<router-link to="/" class="button" @click="logout()">
 				<span class="material-icons">logout</span>
 				<span class="text">LOG OUT</span>
 			</router-link>
 		</div>
-
-
+        <p> {{ token }}</p>
 	</aside>
 
 </template>
 
 <script setup>
+import axios from 'axios';
+const token = ref(localStorage.getItem('token'));
 
 // Use the function in the template
+const logout= async() => {
+
+  // Make the Axios request with the headers
+  await axios.post(
+  'http://127.0.0.1:8000/api/logouts',
+  {},
+  {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+  }
+)
+  .then((response) => {
+    // Handle successful response
+    localStorage.removeItem('token');
+    this.$router.push('/');
+  })
+  .catch((error) => {
+    // Handle error
+    console.log(error);
+  });
+
+};
+
+watchEffect(() => {
+  token.value = localStorage.getItem('token');
+});
 
 
-import { ref } from 'vue'
+
+import { ref , onMounted , watchEffect } from 'vue'
 
 
 
@@ -81,6 +110,11 @@ const ToggleMenu = () => {
 	localStorage.setItem("is_expanded", is_expanded.value)
 }
 
+
+onMounted(async () => {
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+
+});
 
 </script>
 
@@ -127,7 +161,7 @@ aside {
 				color: var(--light);
 				transition: 0.2s ease-out;
 			}
-			
+
 			&:hover {
 				.material-icons {
 					color: var(--primary);
@@ -204,7 +238,7 @@ aside {
 
 		.menu-toggle-wrap {
 			top: -3rem;
-			
+
 			.menu-toggle {
 				transform: rotate(-180deg);
 			}
