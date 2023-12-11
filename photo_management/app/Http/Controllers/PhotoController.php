@@ -9,29 +9,29 @@ class PhotoController extends Controller
     public function getfilesfromcshow($filename)
     {
             $path = "C:\\Users\\HP\\Desktop\\attempted\\photo\\{$filename}";
-        
+
             // if (!file_exists($path)) {
             //     abort(404);
             // }
-        
+
             // return response()->file($path);
-        
+
         //    return ["path" => $path];
         return ["path" => $path];
 
-    } 
+    }
 
 
     public function show($filename)
-{   
-    $path = Storage::disk('public')->path("photos\\{$filename}");
+{
+    // //$path = Storage::disk('public')->path("photos\\{$filename}");
 
-    if (!file_exists($path)) {
-        abort(404);
-    }
+    // if (!file_exists($path)) {
+    //     abort(404);
+    // }
 
-    return response()->file($path);
-    // return ["path" => $path];
+    // return response()->file($path);
+    // // return ["path" => $path];
 }
 
 
@@ -45,8 +45,6 @@ public function bigshow($filename)
     }
 
     return response()->file($path);
-
-
 }
 
 }

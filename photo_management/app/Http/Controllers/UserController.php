@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Crypt; 
+use Illuminate\Support\Facades\Crypt;
 class UserController extends Controller
 {
     public function handle_user_logins(Request $request)
@@ -14,7 +14,7 @@ class UserController extends Controller
                 'email' => 'required|string',
                 'password' => 'required|string'
             ]);
-        
+
             // Retrieve the 'email' and 'password' values from the request
             $email = $request->input('email');
             $password =($request->input('password'));
@@ -26,8 +26,8 @@ class UserController extends Controller
                 'message' => 'User Login successfull',
                 'loginstatus'=> 1
             ]);
-            } 
-            
+            }
+
             else {
                 return response()->json(
                     ['message' => 'User doesnot exist',

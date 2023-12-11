@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\FilesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,9 @@ Route::get('/Sidebar', function () {
     return view('welcome');
 });
 
+Route::get('/GalleryView', function () {
+    return view('welcome');
+});
 
 Route::get('/Main', function () {
     return view('welcome');
@@ -70,4 +74,9 @@ Route::get('/login2', function () {
 Route::get('/photos/{filename}', [PhotoController::class, 'bigshow'])->where('filename', '.*');
 
 
+//Route::get("/lsa"  ,[FilesController::class,"listAllPhotos" ]);
+//Route::get("/lsf"  ,[FilesController::class,"listAllDirectories" ]);
+Route::get('/copy-file', [FilesController::class, 'copyFile']);
+Route::get('/move-file', [FilesController::class, 'moveFile']);
+Route::get('/view-image', [FilesController::class, 'ViewPicture']);
 

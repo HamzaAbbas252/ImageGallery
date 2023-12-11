@@ -35,7 +35,7 @@
 				<span class="material-icons">view_module</span>
 				<span class="text">Gallery</span>
 			</router-link>
-			<router-link to="/about" class="button">
+			<router-link to="/GalleryView" class="button">
 				<span class="material-icons">storage</span>
 				<span class="text">Manage Gallery</span>
 			</router-link>

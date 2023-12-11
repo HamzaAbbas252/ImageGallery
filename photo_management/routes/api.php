@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\FilesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,4 +39,16 @@ Route::post("/RegisterUser"  ,[AuthController::class,"register" ]);
 Route::post("/AuthUser"  ,[AuthController::class,"login" ]);
 Route::post("/logouts"  ,[AuthController::class,"logout" ])->middleware('auth:sanctum');
 
+
+Route::get("/lsa"  ,[FilesController::class,"listAllPhotos" ]);
+Route::get("/lsf"  ,[FilesController::class,"listAllDirectories" ]);
+
+Route::post("/Galleryview"  ,[FilesController::class,"ViewPicture" ]);
+Route::post("/GalleryDelete"  ,[FilesController::class,"deleteFile" ]);
+
+Route::post("/GalleryCopy"  ,[FilesController::class,"copyFile" ]);
+Route::post("/GalleryMove"  ,[FilesController::class,"moveFile" ]);
+
+Route::post("/GalleryHardlink"  ,[FilesController::class,"createHardLink" ]);
+Route::post("/GallerySoftlink"  ,[FilesController::class,"createSymbolicLink" ]);
 

@@ -8,6 +8,7 @@ import oldbar from "../component/oldbar.vue"
 import Main from "../screens/Main.vue"
 import Dailoged from "../component/DailogImage.vue"
 import Deletion_table from "../component/DeleteAction.vue"
+import GalleryView from "../component/GalleryView.vue"
 const routes = [
     {
         name:"Login",
@@ -15,6 +16,12 @@ const routes = [
         component : LoginForm,
         meta: {guest: true},
     },
+    // {
+    //     name:"GalleryView",
+    //     path: '/GalleryView',
+    //     component : GalleryView,
+    //     meta: {guest: true},
+    // },
     {
         name:"Deletion_table",
         path: '/delete',
@@ -57,6 +64,11 @@ const routes = [
                 component : Action_Table
 
             },
+            {
+                name:"GalleryView",
+                path:"/GalleryView",
+                component:GalleryView
+            }
         ],
         }
 
